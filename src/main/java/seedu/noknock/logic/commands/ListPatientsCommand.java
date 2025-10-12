@@ -6,7 +6,7 @@ import seedu.noknock.model.Model;
 import seedu.noknock.model.person.IsPatientPredicate;
 
 /**
- * Lists all persons in the address book to the user.
+ * Lists all patients in the address book to the user.
  */
 public class ListPatientsCommand extends Command {
 
