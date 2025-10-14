@@ -20,10 +20,13 @@ import seedu.noknock.logic.commands.EditCommand;
 import seedu.noknock.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.noknock.logic.commands.ExitCommand;
 import seedu.noknock.logic.commands.FindCommand;
+import seedu.noknock.logic.commands.FindPatientCommand;
 import seedu.noknock.logic.commands.HelpCommand;
 import seedu.noknock.logic.commands.ListCommand;
+import seedu.noknock.logic.commands.ListPatientsCommand;
 import seedu.noknock.logic.parser.exceptions.ParseException;
 import seedu.noknock.model.person.NameContainsKeywordsPredicate;
+import seedu.noknock.model.person.PatientNameContainsKeywordsPredicate;
 import seedu.noknock.model.person.Person;
 import seedu.noknock.testutil.EditPersonDescriptorBuilder;
 import seedu.noknock.testutil.PersonBuilder;
@@ -86,6 +89,20 @@ public class AddressBookParserTest {
     public void parseCommand_list() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_findPatient() throws Exception {
+        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        FindPatientCommand command = (FindPatientCommand) parser.parseCommand(
+                FindPatientCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindPatientCommand(new PatientNameContainsKeywordsPredicate(keywords)), command);
+    }
+
+    @Test
+    public void parseCommand_listPatients() throws Exception {
+        assertTrue(parser.parseCommand( ListPatientsCommand.COMMAND_WORD) instanceof ListPatientsCommand);
+        assertTrue(parser.parseCommand(ListPatientsCommand.COMMAND_WORD + " 3") instanceof ListPatientsCommand);
     }
 
     @Test
