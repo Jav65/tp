@@ -16,6 +16,7 @@ import seedu.noknock.logic.commands.DeleteCommand;
 import seedu.noknock.logic.commands.EditCommand;
 import seedu.noknock.logic.commands.ExitCommand;
 import seedu.noknock.logic.commands.FindCommand;
+import seedu.noknock.logic.commands.FindPatientCommand;
 import seedu.noknock.logic.commands.HelpCommand;
 import seedu.noknock.logic.commands.ListCommand;
 import seedu.noknock.logic.commands.ListPatientsCommand;
@@ -71,6 +72,9 @@ public class AddressBookParser {
 
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
+
+        case FindPatientCommand.COMMAND_WORD:
+            return new FindPatientCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
