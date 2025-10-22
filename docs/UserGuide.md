@@ -20,16 +20,16 @@ NOKnock replaces manual tracking and scheduling methods, improving coordination,
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-W09-2/tp/releases).
+2. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-W09-2/tp/releases).
 
-Copy the file to the folder you wish to use as your NOKnock home folder.
+    Copy the file to the folder you wish to use as your NOKnock home folder.
+3. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar noknock.jar` command to run the application.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar noknock.jar` command to run the application.<br>
-A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
 
    ![Ui](images/Ui.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+4. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
    * `list-patients` — Lists all patients.
    * `add-patient n/Dylan ic/S1234567A w/2A` — Adds a patient named Dylan.
@@ -37,7 +37,7 @@ A GUI similar to the below should appear in a few seconds. Note how the app cont
    * `sessions-today` — Shows today’s caring sessions.
    * `exit` — Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+5. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -48,18 +48,18 @@ A GUI similar to the below should appear in a few seconds. Note how the app cont
 **Notes about the command format:**<br>
 
 * Words in `UPPER_CASE` are parameters to be filled by the user.<br>
-  e.g. `add-patient n/NAME ic/IC_NUMBER` → `add-patient n/Dylan ic/S1234567A`
+  e.g. `add-patient n/NAME ic/IC_NUMBER w/WARD → add-patient n/Dylan ic/S1234567A w/2A`
 
 * Items in square brackets `[ ]` are optional.<br>
   e.g. `add-patient n/NAME ic/IC_NUMBER [t/TAG]` can be used with or without `t/TAG`.
 
-* Items with `...` can appear multiple times (including zero).<br>
+* Items with `...` can appear multiple times (including zero if the item is optional).<br>
   e.g. `[t/TAG]...` → no tags, one tag, or many tags.
 
 * Parameters can be in any order.<br>
   e.g. `n/NAME w/WARD ic/IC_NUMBER` = `ic/IC_NUMBER w/WARD n/NAME`.
 
-* Extra parameters for commands that don’t need them will be ignored.<br>
+* Additional parameters for commands that do not accept them will be ignored.<br>
   e.g. `help abc` = `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
@@ -72,7 +72,8 @@ Shows a message explaining how to access the help page.
 
 ![help message](images/helpMessage.png)
 
-Format: `help`
+**Format:**  
+`help`
 
 ---
 
@@ -262,8 +263,8 @@ Schedules a care session for a patient.
 `add-session PATIENT_INDEX d/DATE time/TIME type/CARE_TYPE [notes/NOTES]`
 
 **Examples:**
-* `add-session 1 d/2024-12-25 t/14:30 type/medication notes/Give insulin shot`
-* `add-session 2 d/25-12-2024 t/2:30pm type/hygiene`
+* `add-session 1 d/2024-12-25 time/14:30 type/medication notes/Give insulin shot`
+* `add-session 2 d/25-12-2024 time/2:30pm type/hygiene`
 
 **Output:**
 * Success → `Caring session added for Dylan: medication on 2024-12-25 at 14:30`
@@ -283,8 +284,8 @@ Edit an existing care session for a patient. You may also update the session sta
 * `edit-session 2 1 status/incomplete`
 
 **Output:**
-* Success \-> `Session updated: Dylan - medication - 2024-12-25 14:30 (complete)`
-* Failure \-> parameter-specific error (e.g. invalid date/time or indices)
+* Success -> `Session updated: Dylan - medication - 2024-12-25 14:30 (complete)`
+* Failure -> parameter-specific error (e.g. invalid date/time or indices)
 
 ---
 
@@ -326,7 +327,7 @@ Displays all caring sessions scheduled for the current week (Monday to Sunday).
 
 **Output:**
 * Success → `This week's caring sessions (2025-10-20 to 2025-10-26):` + list
-* None → `No caring sessions scheduled for this week
+* None → `No caring sessions scheduled for this week`
 
 ---
 
@@ -376,6 +377,5 @@ Furthermore, certain edits can cause the NOKnock to behave in unexpected ways (e
 | **Delete Caring Session** | `delete-caring-session PATIENT_INDEX SESSION_INDEX`<br>e.g. `delete-caring-session 1 2`                                                                                                   |
 | **Sessions Today**        | `sessions-today`                                                                                                                                                                          |
 | **Sessions Week**         | `sessions-week`                                                                                                                                                                           |
-| **Complete Session**      | `complete-session SESSION_ID`                                                                                                                                                             |
 | **Help**                  | `help`                                                                                                                                                                                    |
 | **Exit**                  | `exit`                                                                                                                                                                                    |
