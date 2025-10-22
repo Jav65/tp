@@ -6,8 +6,7 @@
 
 # NOKnock User Guide
 
-**NOKnock** is a **CLI-based nursing home management system** for tracking patients, their Next-of-Kin (NOK) contacts, and caring sessions.  
-It is designed for **nursing home staff who prefer using command-line interfaces** for fast and efficient daily operations.
+**NOKnock** is a **CLI-based nursing home management system** for tracking patients, their Next-of-Kin (NOK) contacts, and caring sessions. It is designed for **nursing home staff who prefer using command-line interfaces** for fast and efficient daily operations.
 
 NOKnock replaces manual tracking and scheduling methods, improving coordination, safety, and productivity in elderly care.
 
@@ -26,7 +25,8 @@ NOKnock replaces manual tracking and scheduling methods, improving coordination,
 Copy the file to the folder you wish to use as your NOKnock home folder.
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar noknock.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+
    ![Ui](images/Ui.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
@@ -74,6 +74,8 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
+---
+
 ## Patient Management
 
 ### Listing all patients: `list-patients`
@@ -84,24 +86,8 @@ Displays all patients with basic information.
 `list-patients`
 
 **Output:**
-* Success → Table with Index, Name, IC, Ward, Tags, NOK count
+* Success → Table with Index, Name, IC, Ward, Tags, NOK List, Caring Session List
 * None → `No patients in the system`
-
----
-
-### Viewing patient details: `view-patient`
-
-Shows full patient details including NOKs and upcoming sessions.
-
-**Format:**  
-`view-patient INDEX`
-
-**Example:**  
-`view-patient 2`
-
-**Output:**
-* Success → Full profile with NOK list and next 5 sessions
-* Failure → `Patient not found at index X`
 
 ---
 
@@ -117,7 +103,7 @@ Creates a new patient record.
 * `add-patient n/Javier w/8B ic/S9876543B t/diabetes t/mobility-issues`
 
 <box type="tip" seamless>
-**Tip:** Tags are optional and can be used to describe medical or care-related info.
+Tags are optional and can be used to describe medical or care-related info.
 </box>
 
 **Output:**
@@ -160,8 +146,24 @@ Removes a patient and all associated data (NOKs, sessions).
 * Failure → `Patient not found at index X`
 
 <box type="warning" seamless>
-**Caution:** Deleting a patient also deletes all related NOK and caring session data.
+Deleting a patient also deletes all related NOK and caring session data.
 </box>
+
+---
+
+### Viewing patient details: `view-patient`
+
+Shows full patient details including NOKs and upcoming sessions.
+
+**Format:**  
+`view-patient INDEX`
+
+**Example:**  
+`view-patient 2`
+
+**Output:**
+* Success → Full profile with NOK list and upcoming sessions
+* Failure → `Patient not found at index X`
 
 ---
 
@@ -257,7 +259,7 @@ Removes a NOK from a patient.
 Schedules a care session for a patient.
 
 **Format:**  
-`add-session PATIENT_INDEX d/DATE t/TIME type/CARE_TYPE [notes/NOTES]`
+`add-session PATIENT_INDEX d/DATE time/TIME type/CARE_TYPE [notes/NOTES]`
 
 **Examples:**
 * `add-session 1 d/2024-12-25 t/14:30 type/medication notes/Give insulin shot`
@@ -266,6 +268,39 @@ Schedules a care session for a patient.
 **Output:**
 * Success → `Caring session added for Dylan: medication on 2024-12-25 at 14:30`
 * Failure → parameter-specific error (e.g. invalid date/time)
+
+---
+
+### Editing a session: `edit-session`
+
+Edit an existing care session for a patient. You may also update the session status (`complete` or `incomplete`).
+
+**Format:**
+`edit-session PATIENT_INDEX SESSION_INDEX [d/DATE] [time/TIME] [type/CARE_TYPE] [notes/NOTES] [status/STATUS]`
+
+**Examples:**
+* `edit-session 1 2 d/2024-12-25 t/14:30 type/medication notes/Adjust dose status/complete`
+* `edit-session 2 1 status/incomplete`
+
+**Output:**
+* Success \-> `Session updated: Dylan - medication - 2024-12-25 14:30 (complete)`
+* Failure \-> parameter-specific error (e.g. invalid date/time or indices)
+
+---
+
+### Deleting a session: `delete-session`
+
+Deletes a care session from a patient.
+
+**Format:**  
+`delete-session PATIENT_INDEX SESSION_INDEX`
+
+**Example:**
+`delete-session 1 2`
+
+**Output:**
+* Success → `Caring session deleted for Dylan: medication on 2024-12-25 at 14:30`
+* Failure → `Patient/Session not found`
 
 ---
 
@@ -282,21 +317,18 @@ Displays all caring sessions scheduled for today.
 
 ---
 
-### Marking a session complete: `complete-session`
+### View this week’s sessions: `sessions-week`
 
-Marks a care session as completed.
+Displays all caring sessions scheduled for the current week (Monday to Sunday).
 
 **Format:**  
-`complete-session SESSION_ID`
-
-**Example:**  
-`complete-session 5`
+`sessions-week`
 
 **Output:**
-* Success → `Session marked complete: Dylan - medication - 2024-12-25 14:30`
-* Failure → `Session not found or already completed`
+* Success → `This week's caring sessions (2025-10-20 to 2025-10-26):` + list
+* None → `No caring sessions scheduled for this week
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ### Saving the data
 
@@ -307,44 +339,43 @@ NOKnock data are saved in the hard disk automatically after any command that cha
 NOKnock data are saved automatically as a JSON file `[JAR file location]/data/noknock.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
-**Caution:**
 If your changes to the data file makes its format invalid, NOKnock will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause the NOKnock to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
-
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous NOKnock home folder.
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## Command Summary
 
-Action | Format, Examples
--------|----------------
-**List Patients** | `list-patients`
-**View Patient** | `view-patient INDEX`
-**Add Patient** | `add-patient n/NAME ic/IC_NUMBER w/WARD [t/TAG]...`<br>e.g. `add-patient n/Dylan ic/S1234567A w/2A t/diabetes`
-**Edit Patient** | `edit-patient INDEX [n/NAME] [w/WARD] [ic/IC_NUMBER] [t/TAG]...`<br>e.g. `edit-patient 1 n/Yue Yang`
-**Delete Patient** | `delete-patient INDEX`<br>e.g. `delete-patient 2`
-**Add NOK** | `add-nok PATIENT_INDEX n/NAME p/PHONE r/RELATIONSHIP`<br>e.g. `add-nok 1 n/Oad p/+6598765432 r/son`
-**Edit NOK** | `edit-nok PATIENT_INDEX NOK_INDEX [n/NAME] [p/PHONE] [r/RELATIONSHIP]`<br>e.g. `edit-nok 1 1 p/+6588888888`
-**Delete NOK** | `delete-nok PATIENT_INDEX NOK_INDEX`
-**Find Patient** | `find-patient KEYWORD [MORE_KEYWORDS]`<br>e.g. `find-patient dylan`
-**Find by NOK** | `find-by-nok KEYWORD [MORE_KEYWORDS]`<br>e.g. `find-by-nok oad`
-**Add Session** | `add-session PATIENT_INDEX d/DATE t/TIME type/CARE_TYPE [notes/NOTES]`<br>e.g. `add-session 1 d/2024-12-25 t/14:30 type/medication`
-**Sessions Today** | `sessions-today`
-**Complete Session** | `complete-session SESSION_ID`
-**Help** | `help`
-**Exit** | `exit`
+| Action                    | Format, Examples                                                                                                                                                                          |
+|---------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **List Patients**         | `list-patients`                                                                                                                                                                           |
+| **View Patient**          | `view-patient INDEX`                                                                                                                                                                      |
+| **Add Patient**           | `add-patient n/NAME ic/IC_NUMBER w/WARD [t/TAG]...`<br>e.g. `add-patient n/Dylan ic/S1234567A w/2A t/diabetes`                                                                            |
+| **Edit Patient**          | `edit-patient INDEX [n/NAME] [w/WARD] [ic/IC_NUMBER] [t/TAG]...`<br>e.g. `edit-patient 1 n/Yue Yang`                                                                                      |
+| **Delete Patient**        | `delete-patient INDEX`<br>e.g. `delete-patient 2`                                                                                                                                         |
+| **Add NOK**               | `add-nok PATIENT_INDEX n/NAME p/PHONE r/RELATIONSHIP`<br>e.g. `add-nok 1 n/Oad p/+6598765432 r/son`                                                                                       |
+| **Edit NOK**              | `edit-nok PATIENT_INDEX NOK_INDEX [n/NAME] [p/PHONE] [r/RELATIONSHIP]`<br>e.g. `edit-nok 1 1 p/+6588888888`                                                                               |
+| **Delete NOK**            | `delete-nok PATIENT_INDEX NOK_INDEX`                                                                                                                                                      |
+| **Add Caring Session**    | `add-caring-session PATIENT_INDEX d/DATE t/TIME type/CARE_TYPE [notes/NOTES]`<br>e.g. `add-caring-session 1 d/2024-12-25 t/14:30 type/medication notes/Give insulin shot`                 |
+| **Edit Caring Session**   | `edit-caring-session PATIENT_INDEX SESSION_INDEX [d/DATE] [t/TIME] [type/CARE_TYPE] [notes/NOTES] [status/STATUS]`<br>e.g. `edit-caring-session 1 2 d/2024-12-25 t/14:30 status/complete` |
+| **Delete Caring Session** | `delete-caring-session PATIENT_INDEX SESSION_INDEX`<br>e.g. `delete-caring-session 1 2`                                                                                                   |
+| **Sessions Today**        | `sessions-today`                                                                                                                                                                          |
+| **Sessions Week**         | `sessions-week`                                                                                                                                                                           |
+| **Complete Session**      | `complete-session SESSION_ID`                                                                                                                                                             |
+| **Help**                  | `help`                                                                                                                                                                                    |
+| **Exit**                  | `exit`                                                                                                                                                                                    |
