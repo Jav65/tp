@@ -160,8 +160,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public Predicate<CaringSession> getSessionDisplayFilter() {
+        return sessionDisplayFilter.get();
+    }
+
+    @Override
     public ReadOnlyObjectProperty<Predicate<CaringSession>> sessionDisplayFilterProperty() {
-        logger.info("BUAHAHHAHA" + sessionDisplayFilter);
         return sessionDisplayFilter;
     }
 }

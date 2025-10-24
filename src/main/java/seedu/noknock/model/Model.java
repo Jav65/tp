@@ -97,6 +97,11 @@ public interface Model {
     void setSessionDisplayFilter(Predicate<CaringSession> predicate);
 
     /**
+     * Returns the current predicate used to filter the displayed caring sessions (across all patients).
+     */
+    Predicate<CaringSession> getSessionDisplayFilter();
+
+    /**
      * Returns a read-only property of the caring-session display filter.
      * UI may observe this property to react to filter changes.
      */
