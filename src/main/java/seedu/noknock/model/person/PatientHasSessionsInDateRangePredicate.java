@@ -15,6 +15,15 @@ public class PatientHasSessionsInDateRangePredicate implements Predicate<Patient
     private final Date startDate;
     private final Date endDate;
 
+    /**
+     * Creates a predicate that matches patients having at least one session dated within
+     * the inclusive range [startDate, endDate]. If {@code startDate} is after {@code endDate},
+     * the values are swapped to normalize the range.
+     *
+     * @param startDate inclusive start date
+     * @param endDate inclusive end date
+     * @throws NullPointerException if {@code startDate} or {@code endDate} is null
+     */
     public PatientHasSessionsInDateRangePredicate(Date startDate, Date endDate) {
         Objects.requireNonNull(startDate);
         Objects.requireNonNull(endDate);
@@ -27,6 +36,13 @@ public class PatientHasSessionsInDateRangePredicate implements Predicate<Patient
         }
     }
 
+    /**
+     * Factory for a single-day predicate (i.e., matches sessions on {@code date} only).
+     *
+     * @param date the date to match (inclusive)
+     * @return a predicate constrained to the given date
+     * @throws NullPointerException if {@code date} is null
+     */
     public static PatientHasSessionsInDateRangePredicate onDate(Date date) {
         return new PatientHasSessionsInDateRangePredicate(date, date);
     }
@@ -35,6 +51,7 @@ public class PatientHasSessionsInDateRangePredicate implements Predicate<Patient
         return d.compareTo(startDate) >= 0 && d.compareTo(endDate) <= 0;
     }
 
+    @Override
     public boolean test(Patient patient) {
         Objects.requireNonNull(patient);
         return patient.getCaringSessionList().stream()

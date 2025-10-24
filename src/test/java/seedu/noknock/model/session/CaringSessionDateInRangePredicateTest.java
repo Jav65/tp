@@ -92,7 +92,8 @@ public class CaringSessionDateInRangePredicateTest {
         CaringSessionDateInRangePredicate predicate = CaringSessionDateInRangePredicate.today();
 
         CaringSession shouldPass = new CaringSessionBuilder().withDate(today.toString()).withTime("08:00").build();
-        CaringSession shouldFail = new CaringSessionBuilder().withDate(today.plusDays(1).toString()).withTime("08:00").build();
+        CaringSession shouldFail = new CaringSessionBuilder().withDate(today.plusDays(1)
+                .toString()).withTime("08:00").build();
 
         assertTrue(predicate.test(shouldPass));
         assertFalse(predicate.test(shouldFail));
@@ -108,7 +109,8 @@ public class CaringSessionDateInRangePredicateTest {
 
         CaringSession inStart = new CaringSessionBuilder().withDate(start.toString()).withTime("00:01").build();
         CaringSession inEnd = new CaringSessionBuilder().withDate(end.toString()).withTime("23:59").build();
-        CaringSession before = new CaringSessionBuilder().withDate(start.minusDays(1).toString()).withTime("12:00").build();
+        CaringSession before = new CaringSessionBuilder().withDate(start.minusDays(1)
+                .toString()).withTime("12:00").build();
         CaringSession after = new CaringSessionBuilder().withDate(end.plusDays(1).toString()).withTime("12:00").build();
 
         assertTrue(predicate.test(inStart));

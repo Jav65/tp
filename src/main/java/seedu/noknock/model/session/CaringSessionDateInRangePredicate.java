@@ -8,7 +8,6 @@ import java.util.function.Predicate;
 
 import seedu.noknock.commons.util.ToStringBuilder;
 import seedu.noknock.model.date.Date;
-import seedu.noknock.model.person.PatientHasSessionsInDateRangePredicate;
 
 /**
  * Filters {@code CaringSession} by an inclusive date range [startDate, endDate].

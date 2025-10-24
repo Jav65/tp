@@ -20,7 +20,7 @@ import seedu.noknock.model.Model;
 import seedu.noknock.model.ModelManager;
 import seedu.noknock.model.UserPrefs;
 import seedu.noknock.model.person.Patient;
-import seedu.noknock.model.person.PatientHasSessionsInDateRangePredicateTest;
+import seedu.noknock.model.person.PatientHasSessionsInDateRangePredicate;
 import seedu.noknock.model.session.CaringSession;
 import seedu.noknock.model.session.CaringSessionDateInRangePredicate;
 import seedu.noknock.testutil.CaringSessionBuilder;
@@ -48,9 +48,12 @@ public class SessionsWeekCommandTest {
 
         CaringSession sStart = new CaringSessionBuilder().withDate(startOfWeek.toString()).withTime("08:00").build();
         CaringSession sEnd = new CaringSessionBuilder().withDate(endOfWeek.toString()).withTime("17:00").build();
-        CaringSession sMid = new CaringSessionBuilder().withDate(startOfWeek.plusDays(2).toString()).withTime("10:00").build();
-        CaringSession sBefore = new CaringSessionBuilder().withDate(startOfWeek.minusDays(1).toString()).withTime("09:00").build();
-        CaringSession sAfter = new CaringSessionBuilder().withDate(endOfWeek.plusDays(1).toString()).withTime("09:00").build();
+        CaringSession sMid = new CaringSessionBuilder().withDate(startOfWeek.plusDays(2)
+                .toString()).withTime("10:00").build();
+        CaringSession sBefore = new CaringSessionBuilder().withDate(startOfWeek.minusDays(1)
+                .toString()).withTime("09:00").build();
+        CaringSession sAfter = new CaringSessionBuilder().withDate(endOfWeek.plusDays(1)
+                .toString()).withTime("09:00").build();
 
         // p1: at start of week
         model.setPatient(p1, p1.withCaringSessionList(Collections.singletonList(sStart)));
@@ -85,7 +88,7 @@ public class SessionsWeekCommandTest {
         expectedModel.setSessionDisplayFilter(new CaringSessionDateInRangePredicate(
                 new seedu.noknock.model.date.Date(startOfWeek.toString()),
                 new seedu.noknock.model.date.Date(endOfWeek.toString())));
-        expectedModel.updateFilteredPatientList(new PatientHasSessionsInDateRangePredicateTest(
+        expectedModel.updateFilteredPatientList(new PatientHasSessionsInDateRangePredicate(
                 new seedu.noknock.model.date.Date(startOfWeek.toString()),
                 new seedu.noknock.model.date.Date(endOfWeek.toString())));
 

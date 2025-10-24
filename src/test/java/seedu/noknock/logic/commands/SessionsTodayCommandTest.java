@@ -19,7 +19,7 @@ import seedu.noknock.model.Model;
 import seedu.noknock.model.ModelManager;
 import seedu.noknock.model.UserPrefs;
 import seedu.noknock.model.person.Patient;
-import seedu.noknock.model.person.PatientHasSessionsInDateRangePredicateTest;
+import seedu.noknock.model.person.PatientHasSessionsInDateRangePredicate;
 import seedu.noknock.model.session.CaringSession;
 import seedu.noknock.model.session.CaringSessionDateInRangePredicate;
 import seedu.noknock.testutil.CaringSessionBuilder;
@@ -73,7 +73,7 @@ public class SessionsTodayCommandTest {
         // expected model: apply the same filters
         expectedModel.setSessionDisplayFilter(CaringSessionDateInRangePredicate.onDate(
                 new seedu.noknock.model.date.Date(today.format(DateTimeFormatter.ISO_LOCAL_DATE))));
-        expectedModel.updateFilteredPatientList(PatientHasSessionsInDateRangePredicateTest.onDate(
+        expectedModel.updateFilteredPatientList(PatientHasSessionsInDateRangePredicate.onDate(
                 new seedu.noknock.model.date.Date(today.format(DateTimeFormatter.ISO_LOCAL_DATE))));
 
         String expectedMessage = String.format(SessionsTodayCommand.MESSAGE_TODAY_SESSIONS,
@@ -84,7 +84,8 @@ public class SessionsTodayCommandTest {
         // Verify the session filter behavior
         Predicate<CaringSession> sessionFilter = model.getSessionDisplayFilter();
         CaringSession shouldPass = new CaringSessionBuilder().withDate(today.toString()).withTime("10:00").build();
-        CaringSession shouldFail = new CaringSessionBuilder().withDate(today.plusDays(1).toString()).withTime("10:00").build();
+        CaringSession shouldFail = new CaringSessionBuilder().withDate(today.plusDays(1)
+                .toString()).withTime("10:00").build();
 
         assertTrue(sessionFilter.test(shouldPass));
         assertFalse(sessionFilter.test(shouldFail));

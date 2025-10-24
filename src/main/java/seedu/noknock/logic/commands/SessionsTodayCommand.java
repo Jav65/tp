@@ -4,14 +4,12 @@ import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.function.Predicate;
 
 import seedu.noknock.commons.util.ToStringBuilder;
 import seedu.noknock.logic.commands.exceptions.CommandException;
 import seedu.noknock.model.Model;
 import seedu.noknock.model.date.Date;
 import seedu.noknock.model.person.PatientHasSessionsInDateRangePredicate;
-import seedu.noknock.model.session.CaringSession;
 import seedu.noknock.model.session.CaringSessionDateInRangePredicate;
 
 /**
