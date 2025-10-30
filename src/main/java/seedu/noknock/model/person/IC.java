@@ -38,4 +38,8 @@ public class IC {
         IC otherIc = (IC) other;
         return ic.equals(otherIc.ic);
     }
+    @Override
+    public int hashCode() {
+        return ic.hashCode();
+    }
 }
