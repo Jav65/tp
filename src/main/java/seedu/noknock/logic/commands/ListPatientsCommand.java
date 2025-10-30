@@ -5,7 +5,6 @@ import static seedu.noknock.model.Model.PREDICATE_SHOW_ALL_SESSIONS;
 
 import seedu.noknock.model.Model;
 import seedu.noknock.model.person.IsPatientPredicate;
-import seedu.noknock.model.session.CaringSessionDateInRangePredicate;
 
 /**
  * Lists all patients in the address book to the user.
