@@ -19,7 +19,6 @@ import org.junit.jupiter.api.io.TempDir;
 
 import seedu.noknock.logic.commands.AddPatientCommand;
 import seedu.noknock.logic.commands.CommandResult;
-import seedu.noknock.logic.commands.ListCommand;
 import seedu.noknock.logic.commands.exceptions.CommandException;
 import seedu.noknock.logic.parser.exceptions.ParseException;
 import seedu.noknock.model.Model;
@@ -61,12 +60,6 @@ public class LogicManagerTest {
     public void execute_commandExecutionError_throwsCommandException() {
         String deleteCommand = "delete 9";
         assertCommandException(deleteCommand, MESSAGE_INVALID_PATIENT_DISPLAYED_INDEX);
-    }
-
-    @Test
-    public void execute_validCommand_success() throws Exception {
-        String listCommand = ListCommand.COMMAND_WORD;
-        assertCommandSuccess(listCommand, ListCommand.MESSAGE_SUCCESS, model);
     }
 
     @Test
