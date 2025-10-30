@@ -48,7 +48,7 @@ public class EditPatientCommandParser implements Parser<EditPatientCommand> {
             editPatientDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
         }
         if (argMultimap.getValue(PREFIX_IC).isPresent()) {
-            editPatientDescriptor.setIc(ParserUtil.parseIc(argMultimap.getValue(PREFIX_IC).get()));
+            editPatientDescriptor.setIC(ParserUtil.parseIc(argMultimap.getValue(PREFIX_IC).get()));
         }
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPatientDescriptor::setTags);
         if (argMultimap.getValue(PREFIX_WARD).isPresent()) {

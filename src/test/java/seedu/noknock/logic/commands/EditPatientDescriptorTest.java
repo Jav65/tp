@@ -12,10 +12,23 @@ import static seedu.noknock.logic.commands.CommandTestUtil.VALID_WARD_BOB;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.noknock.logic.commands.EditCommand.EditPatientDescriptor;
+import seedu.noknock.logic.commands.EditPatientCommand.EditPatientDescriptor;
 import seedu.noknock.testutil.EditPatientDescriptorBuilder;
 
 public class EditPatientDescriptorTest {
+
+    @Test
+    public void isAnyFieldEdited() {
+        EditPatientDescriptorBuilder testDescriptorBuilder = new EditPatientDescriptorBuilder();
+        // unchanged -> false
+        assertFalse(testDescriptorBuilder.build().isAnyFieldEdited());
+
+        // changed -> true
+        assertTrue(testDescriptorBuilder.withIC("S1234568A").build().isAnyFieldEdited());
+        assertTrue(testDescriptorBuilder.withName("Bob").build().isAnyFieldEdited());
+        assertTrue(testDescriptorBuilder.withWard("1A").build().isAnyFieldEdited());
+        assertTrue(testDescriptorBuilder.withTags("stuff").build().isAnyFieldEdited());
+    }
 
     @Test
     public void equals() {
@@ -56,10 +69,10 @@ public class EditPatientDescriptorTest {
     public void toStringMethod() {
         EditPatientDescriptor editPersonDescriptor = new EditPatientDescriptor();
         String expected = EditPatientDescriptor.class.getCanonicalName() + "{name="
-                + editPersonDescriptor.getName().orElse(null) + ", ward="
-                + editPersonDescriptor.getWard().orElse(null) + ", ic="
-                + editPersonDescriptor.getIC().orElse(null) + ", tags="
-                + editPersonDescriptor.getTags().orElse(null) + "}";
+            + editPersonDescriptor.getName().orElse(null) + ", ward="
+            + editPersonDescriptor.getWard().orElse(null) + ", ic="
+            + editPersonDescriptor.getIC().orElse(null) + ", tags="
+            + editPersonDescriptor.getTags().orElse(null) + "}";
         assertEquals(expected, editPersonDescriptor.toString());
     }
 }

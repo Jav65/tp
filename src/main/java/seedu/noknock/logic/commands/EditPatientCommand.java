@@ -66,11 +66,11 @@ public class EditPatientCommand extends Command {
      * edited with {@code editPatientDescriptor}.
      */
     private static Patient createEditedPatient(Patient patientToEdit, EditPatientDescriptor editPatientDescriptor) {
-        assert patientToEdit != null;
+        requireNonNull(patientToEdit);
 
         Name updatedName = editPatientDescriptor.getName().orElse(patientToEdit.getName());
         Ward updatedWard = editPatientDescriptor.getWard().orElse(patientToEdit.getWard());
-        IC updatedIc = editPatientDescriptor.getIc().orElse(patientToEdit.getIC());
+        IC updatedIc = editPatientDescriptor.getIC().orElse(patientToEdit.getIC());
         Set<Tag> updatedTags = editPatientDescriptor.getTags().orElse(patientToEdit.getTags());
 
         return new Patient(updatedName, updatedWard, updatedIc, updatedTags).withNextOfKinList(
@@ -140,7 +140,7 @@ public class EditPatientCommand extends Command {
          */
         public EditPatientDescriptor(EditPatientCommand.EditPatientDescriptor toCopy) {
             setName(toCopy.name);
-            setIc(toCopy.ic);
+            setIC(toCopy.ic);
             setWard(toCopy.ward);
             setTags(toCopy.tags);
         }
@@ -168,11 +168,11 @@ public class EditPatientCommand extends Command {
             this.ward = ward;
         }
 
-        public Optional<IC> getIc() {
+        public Optional<IC> getIC() {
             return Optional.ofNullable(ic);
         }
 
-        public void setIc(IC ic) {
+        public void setIC(IC ic) {
             this.ic = ic;
         }
 

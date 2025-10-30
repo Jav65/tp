@@ -4,12 +4,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import seedu.noknock.logic.commands.EditCommand.EditPatientDescriptor;
-import seedu.noknock.model.person.Address;
+import seedu.noknock.logic.commands.EditPatientCommand.EditPatientDescriptor;
 import seedu.noknock.model.person.IC;
 import seedu.noknock.model.person.Name;
 import seedu.noknock.model.person.Patient;
-import seedu.noknock.model.person.Person;
 import seedu.noknock.model.person.Ward;
 import seedu.noknock.model.tag.Tag;
 
@@ -31,9 +29,8 @@ public class EditPatientDescriptorBuilder {
     /**
      * Returns an {@code EditPatientDescriptor} with fields containing {@code person}'s details
      */
-    public EditPatientDescriptorBuilder(Person person) {
-        assert person instanceof Patient;
-        Patient patient = (Patient) person;
+    public EditPatientDescriptorBuilder(Patient patient) {
+        assert patient instanceof Patient;
         descriptor = new EditPatientDescriptor();
         descriptor.setName(patient.getName());
         descriptor.setWard(patient.getWard());
@@ -62,14 +59,6 @@ public class EditPatientDescriptorBuilder {
      */
     public EditPatientDescriptorBuilder withIC(String ic) {
         descriptor.setIC(new IC(ic));
-        return this;
-    }
-
-    /**
-     * Sets the {@code Address} of the {@code EditPatientDescriptor} that we are building.
-     */
-    public EditPatientDescriptorBuilder withAddress(String address) {
-        descriptor.setAddress(new Address(address));
         return this;
     }
 
