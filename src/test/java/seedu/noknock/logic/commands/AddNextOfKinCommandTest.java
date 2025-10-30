@@ -250,5 +250,8 @@ public class AddNextOfKinCommandTest {
         public ObservableList<Patient> getFilteredPatientList() {
             return FXCollections.observableArrayList(patient);
         }
+
+        @Override
+        public void setSessionDisplayFilter(Predicate<CaringSession> predicate) {}
     }
 }

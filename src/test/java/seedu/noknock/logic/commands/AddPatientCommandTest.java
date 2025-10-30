@@ -217,6 +217,9 @@ public class AddPatientCommandTest {
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
+
+        @Override
+        public void setSessionDisplayFilter(Predicate<CaringSession> predicate) {}
     }
 
 }
