@@ -17,6 +17,9 @@ public class PatientEqualsPredicate implements Predicate<Patient> {
 
     @Override
     public boolean test(Patient patient) {
+        if (patient == null) {
+            return false;
+        }
         return target.equals(patient);
     }
 

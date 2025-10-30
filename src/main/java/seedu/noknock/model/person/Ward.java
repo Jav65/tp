@@ -2,6 +2,7 @@ package seedu.noknock.model.person;
 
 import static seedu.noknock.commons.util.StringUtil.removeSpaces;
 
+import java.util.Objects;
 /**
  * Represents a hospital ward assigned to a person.
  * <p>
@@ -45,5 +46,9 @@ public class Ward {
         }
         Ward otherWard = (Ward) other;
         return room.equals(otherWard.getRoom());
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(room);
     }
 }
