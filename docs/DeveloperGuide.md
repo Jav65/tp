@@ -777,6 +777,10 @@ These instructions combine quick-start steps and feature-specific test cases to 
 1. `sessions-today` — Expected: today's sessions list or `No caring sessions scheduled for today`.
 2. `sessions-week` — Expected: this week's sessions or `No caring sessions scheduled for this week`.
 
+<puml src="diagrams/SessionsTodayCommandSequenceDiagram.puml" width="280" />
+
+Sequence diagram for `sessions-today` command.
+
 #### Complete session
 
 1. Mark complete via `edit-session` with `status/complete` or dedicated command if present.
