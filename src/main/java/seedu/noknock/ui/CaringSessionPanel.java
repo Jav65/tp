@@ -58,6 +58,9 @@ public class CaringSessionPanel extends UiPart<Region> {
         this.sessionFilterProp.addListener((obs, oldVal, newVal) -> rebuildFromPatients());
     }
 
+    /**
+    * Rebuilds the flattened, grouped list.
+    */
     private void rebuildFromPatients() {
         Predicate<CaringSession> sessionFilter =
                 sessionFilterProp.get() != null ? sessionFilterProp.get() : s -> true;
