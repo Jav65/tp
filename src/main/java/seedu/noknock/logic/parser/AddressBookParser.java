@@ -24,6 +24,8 @@ import seedu.noknock.logic.commands.FindPatientByNextOfKinCommand;
 import seedu.noknock.logic.commands.FindPatientCommand;
 import seedu.noknock.logic.commands.HelpCommand;
 import seedu.noknock.logic.commands.ListPatientsCommand;
+import seedu.noknock.logic.commands.SessionsTodayCommand;
+import seedu.noknock.logic.commands.SessionsWeekCommand;
 import seedu.noknock.logic.commands.ViewPatientCommand;
 import seedu.noknock.logic.parser.exceptions.ParseException;
 
@@ -80,6 +82,12 @@ public class AddressBookParser {
 
         case DeleteCaringSessionCommand.COMMAND_WORD:
             return new DeleteCaringSessionCommandParser().parse(arguments);
+
+        case SessionsTodayCommand.COMMAND_WORD:
+            return new SessionsTodayCommand();
+
+        case SessionsWeekCommand.COMMAND_WORD:
+            return new SessionsWeekCommand();
 
         case DeletePatientCommand.COMMAND_WORD:
             return new DeletePatientCommandParser().parse(arguments);
