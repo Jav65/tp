@@ -114,11 +114,11 @@ list-patients
 
 2) Add a new patient
 ~~~
-add-patient n/Aisha Tan ic/S1234567A w/2A t/diabetes
+add-patient n/Aisha Tan ic/S1111111A w/2A t/diabetes
 ~~~
 Expected:
 ~~~
-Patient added: Aisha Tan (S1234567A)
+New patient added: Aisha Tan
 ~~~
 
 3) Find your patient’s index (since sample data may exist)
@@ -129,25 +129,25 @@ Note the Index shown for “Aisha Tan” (e.g., 5). Use that number in the next 
 
 4) Add a Next‑of‑Kin for that patient (replace X with Aisha’s index)
 ~~~
-add-nok X n/Daniel Tan p/+6598765432 r/son
+add-nok X n/Daniel Tan p/6598765432 r/son
 ~~~
 Expected:
 ~~~
-NOK added for Aisha Tan: Daniel Tan (son, +6598765432)
+Added NextOfKin: Daniel Tan to Patient: Aisha Tan
 ~~~
 
 5) Schedule a caring session (replace X; adjust date/time as needed)
 ~~~
-add-session X d/2025-11-01 time/09:30 type/medication notes/Metformin 500mg
+add-session X d/2025-10-31 time/09:30 type/medication notes/Metformin 500mg
 ~~~
 Expected:
 ~~~
-Caring session added for Aisha Tan: medication on 2025-11-01 at 09:30
+Added Caring Session: medication on 2025-10-31 at 09:30 to Patient: Aisha Tan
 ~~~
 
 6) View the full patient profile
 ~~~
-view-patient 1
+view-patient X
 ~~~
 You’ll see Aisha’s details, linked NOK(s), and upcoming sessions in one place.
 
@@ -225,26 +225,24 @@ Creates a new patient record.
 **Examples:**
 
 * `add-patient n/Dylan w/2A ic/S1234567A`
-* `add-patient n/Javier w/8B ic/S9876543B t/diabetes t/mobility-issues`
+* `add-patient n/Javier w/8B ic/S9876543B t/diabetes t/mobilityIssues`
 
 💡 **Tip:** You can always enter the command phrase to be prompted the right usage of commands
 ![help message](images/TipCommandHint.png)
 
-❌ **Common mistakes**: It is common for one to enter the orders of fields wrongly.
+**Note**: The order of fields does not matter. For example,
 <box type="error">
-E.g.add-patient n/Amy ic/S1234567A w/2A
+add-patient t/Urgent ic/S2345678A w/2A n/Amy
 </box>
 
 <box type="tip" seamless>
-
 **Note:** Tags are optional and can be used to describe medical or care-related info.
-
 </box>
 
 **Output:**
 
-* Success → `Patient added: Dylan (S1234567A)`
-* Duplicate → `Patient with IC S1234567A already exists`
+* Success → `New patient added: Dylan`
+* Duplicate → `This patient already exists in the address book`
 * Invalid input → parameter-specific error message
 
 ### Editing a patient: `edit-patient`
@@ -261,8 +259,8 @@ Updates an existing patient’s information. At least one field must be provided
 
 **Output:**
 
-* Success → `Patient updated: Yue Yang (S1234567A)`
-* Invalid index → `Patient index X is out of range`
+* Success → `Edited Patient: Yue Yang`
+* Invalid index → `The patient index provided is invalid`
 * Duplicate IC → `This patient already exists in the address book`
 
 ❌ **Possible mistake**: `edit-patient 1` is incorrect because no field was provided.
@@ -278,8 +276,8 @@ Removes a patient and all associated data (NOKs, sessions).
 
 **Output:**
 
-* Success → `Patient deleted: Yue Yang (S1234567A)`
-* Failure → `Patient not found at index X`
+* Success → `Deleted Patient: Yue Yang`
+* Failure → `Invalid patient index. Please use a number from the patient list.`
 
 <box type="warning" seamless>
 
@@ -307,7 +305,7 @@ Shows full patient details including NOKs and upcoming sessions.
 **Output:**
 
 * Success → Full profile with NOK list and upcoming sessions
-* Failure → `Patient not found at index X`
+* Failure → `The patient index provided is invalid`
 ![View](images/ViewPatient.png)
 ### Finding patients by name: `find-patient`
 
@@ -323,13 +321,12 @@ Search for patients by name (case-insensitive, partial matching).
 
 **Output:**
 
-* Success → `2 patient(s) found:` + list
-* None → `No patients found matching: javier wong`
+* Success → `X persons listed!` + list
+* None → `0 persons listed!`
 ⚠️ Tip: You can enter multiple keywords(capitalised or non-capitalised is fine) to find more than 1 patient. E.g
 ![Find](images/TipFindCommand.png)
 ![Find](images/TipFindCommandAfter.png)
-❗ **Common error**: keywords must match at least 1 word in patient's name. A prefix will not yield
-any result.
+❗ **Common error**: Keywords can match any part of a patient’s name from the start of a word. For example, searching Alex will match “Alex Tan” and “Tan Alex”, but not “Malex Tan” (since the match is in the middle of a word).
 ### Finding patients by NOK name: `find-by-nok`
 
 Search for patients based on their NOK’s name.
@@ -344,8 +341,8 @@ Search for patients based on their NOK’s name.
 
 **Output:**
 
-* Success → `1 patient(s) found (via NOK search):` + list
-* None → `No patients found with NOK matching: oad`
+* Success → `1 persons listed!` + list
+* None → `0 persons listed!`
 
 ---
 
@@ -360,13 +357,14 @@ Adds a Next-of-Kin contact for a patient.
 
 **Examples:**
 
-* `add-nok 1 n/Oad p/+6598765432 r/son`
-* `add-nok 2 n/Dr. Kapikapi p/+656234-5678 r/doctor`
+* `add-nok 1 n/Oad p/6598765432 r/son`
 
 **Output:**
 
-* Success → `NOK added for Dylan: Oad (son, +6598765432)`
+* Success → `Added NextOfKin: Oad to Patient: Dylan`
 * Duplicate → `NOK with same name and phone already exists for this patient`
+
+**Note**: Relationship must be one of: Daughter, Father, Mother, Grandmother, Grandfather, Granddaughter, GrandSon, Son (case-insensitive)
 
 ⚠️ **Tip**: you can always use the `list-patient` command to see the list of patients before deciding which patient the
 nok should be added to.
@@ -381,12 +379,12 @@ Updates NOK details.
 `edit-nok PATIENT_INDEX NOK_INDEX [n/NAME] [p/PHONE] [r/RELATIONSHIP]`
 
 **Example:**  
-`edit-nok 1 1 p/+6588888888`
+`edit-nok 1 1 p/6588888888`
 
 **Output:**
 
-* Success → `NOK updated for Dylan: Oad (son, +6588888888)`
-* Failure → `Patient/NOK not found`
+* Success → `Edited NextOfKin: Jane Doe of Patient: Bernice Yu`
+* Failure → `The patient/Next-of-Kin index provided is invalid`
 
 ### Deleting a NOK: `delete-nok`
 
@@ -400,8 +398,8 @@ Removes a NOK from a patient.
 
 **Output:**
 
-* Success → `NOK deleted for Dylan: Oad Smith`
-* Failure → `Patient/NOK not found`
+* Success → `Deleted NextOfKin: Oad`
+* Failure → `The patient/Next-of-Kin index provided is invalid`
 
 ---
 
@@ -416,12 +414,12 @@ Schedules a care session for a patient.
 
 **Examples:**
 
-* `add-session 1 d/2024-12-25 time/14:30 type/medication notes/Give insulin shot`
-* `add-session 2 d/25-12-2024 time/2:30pm type/hygiene`
+* `add-session 1 d/2025-10-31 time/14:30 type/medication notes/Give insulin shot`
+* `add-session 2 d/25-10-2025 time/2:30pm type/hygiene`
 
 **Output:**
 
-* Success → `Caring session added for Dylan: medication on 2024-12-25 at 14:30`
+* Success → `Added Caring Session: hygiene on 2024-12-25 at 14:30 to Patient: Dylan`
 * Failure → parameter-specific error (e.g. invalid date/time)
 
 ### Editing a session: `edit-session`
@@ -433,7 +431,7 @@ Edit an existing care session for a patient. You may also update the session sta
 
 **Examples:**
 
-* `edit-session 1 2 d/2024-12-25 t/14:30 type/medication notes/Adjust dose status/complete`
+* `edit-session 1 1 d/2024-12-25 time/14:30 type/medication notes/Adjust dose status/completed`
 * `edit-session 2 1 status/incomplete`
 
 **Output:**
@@ -459,8 +457,8 @@ Deletes a care session from a patient.
 
 **Output:**
 
-* Success → `Caring session deleted for Dylan: medication on 2024-12-25 at 14:30`
-* Failure → `Patient/Session not found`
+* Success → `Deleted caring session for medication on 2025-10-31 at 14:30: Dylan`
+* Failure → `The patient/caring session index provided is invalid`
 
 ### Viewing today’s sessions: `sessions-today`
 
@@ -471,8 +469,8 @@ Displays all caring sessions scheduled for today.
 
 **Output:**
 
-* Success → `Today's caring sessions (2025-10-22):` + list
-* None → `No caring sessions scheduled for today`
+* Success → `Today's caring sessions: 1 patients.` + list
+* None → `Today's caring sessions: 0 patients.`
 
 ### View this week’s sessions: `sessions-week`
 
@@ -483,8 +481,8 @@ Displays all caring sessions scheduled for the current week (Monday to Sunday).
 
 **Output:**
 
-* Success → `This week's caring sessions (2025-10-20 to 2025-10-26):` + list
-* None → `No caring sessions scheduled for this week`
+* Success → `This week's caring sessions: X patients.` + list
+* None → `This week's caring sessions: 0 patients.`
 
 ---
 
@@ -539,20 +537,20 @@ Furthermore, certain edits can cause the NOKnock to behave in unexpected ways (e
 
 ## Command Summary
 
-| **Action**                | **Format / Example**                                                                                                                                                                      |
-|---------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **List Patients**         | `list-patients`                                                                                                                                                                           |
-| **View Patient**          | `view-patient INDEX`                                                                                                                                                                      |
-| **Add Patient**           | `add-patient n/NAME ic/IC_NUMBER w/WARD [t/TAG]...`<br>e.g. `add-patient n/Dylan ic/S1234567A w/2A t/diabetes`                                                                            |
-| **Edit Patient**          | `edit-patient INDEX [n/NAME] [w/WARD] [ic/IC_NUMBER] [t/TAG]...`<br>e.g. `edit-patient 1 n/Yue Yang`                                                                                      |
-| **Delete Patient**        | `delete-patient INDEX`<br>e.g. `delete-patient 2`                                                                                                                                         |
-| **Add NOK**               | `add-nok PATIENT_INDEX n/NAME p/PHONE r/RELATIONSHIP`<br>e.g. `add-nok 1 n/Oad p/+6598765432 r/son`                                                                                       |
-| **Edit NOK**              | `edit-nok PATIENT_INDEX NOK_INDEX [n/NAME] [p/PHONE] [r/RELATIONSHIP]`<br>e.g. `edit-nok 1 1 p/+6588888888`                                                                               |
-| **Delete NOK**            | `delete-nok PATIENT_INDEX NOK_INDEX`                                                                                                                                                      |
-| **Add Caring Session**    | `add-caring-session PATIENT_INDEX d/DATE t/TIME type/CARE_TYPE [notes/NOTES]`<br>e.g. `add-caring-session 1 d/2024-12-25 t/14:30 type/medication notes/Give insulin shot`                 |
-| **Edit Caring Session**   | `edit-caring-session PATIENT_INDEX SESSION_INDEX [d/DATE] [t/TIME] [type/CARE_TYPE] [notes/NOTES] [status/STATUS]`<br>e.g. `edit-caring-session 1 2 d/2024-12-25 t/14:30 status/complete` |
-| **Delete Caring Session** | `delete-caring-session PATIENT_INDEX SESSION_INDEX`<br>e.g. `delete-caring-session 1 2`                                                                                                   |
-| **Sessions Today**        | `sessions-today`                                                                                                                                                                          |
-| **Sessions Week**         | `sessions-week`                                                                                                                                                                           |
-| **Help**                  | `help`                                                                                                                                                                                    |
-| **Exit**                  | `exit`                                                                                                                                                                                    |
+| **Action**                | **Format / Example**                                                                                                                                                                                                 |
+|---------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **List Patients**         | `list-patients`                                                                                                                                                                                                      |
+| **View Patient**          | `view-patient INDEX`                                                                                                                                                                                                 |
+| **Add Patient**           | `add-patient n/NAME ic/IC_NUMBER w/WARD [t/TAG]...`<br>e.g. `add-patient n/Dylan ic/S1234567A w/2A t/diabetes`                                                                                                       |
+| **Edit Patient**          | `edit-patient INDEX [n/NAME] [w/WARD] [ic/IC_NUMBER] [t/TAG]...`<br>e.g. `edit-patient 1 n/Yue Yang`                                                                                                                 |
+| **Delete Patient**        | `delete-patient INDEX`<br>e.g. `delete-patient 2`                                                                                                                                                                    |
+| **Add NOK**               | `add-nok PATIENT_INDEX n/NAME p/PHONE r/RELATIONSHIP`<br>e.g. `add-nok 1 n/Oad p/6598765432 r/son`                                                                                                                   |
+| **Edit NOK**              | `edit-nok PATIENT_INDEX NOK_INDEX [n/NAME] [p/PHONE] [r/RELATIONSHIP]`<br>e.g. `edit-nok 1 1 p/6588888888`                                                                                                           |
+| **Delete NOK**            | `delete-nok PATIENT_INDEX NOK_INDEX`                                                                                                                                                                                 |
+| **Add Caring Session**    | `add-session PATIENT_INDEX d/DATE time/TIME type/CARE_TYPE [notes/NOTES]`<br>e.g. `add-session 1 d/2025-10-31 time/14:30 type/medication notes/Give insulin shot`                                                    |
+| **Edit Caring Session**   | `edit-session PATIENT_INDEX SESSION_INDEX [d/DATE] [time/TIME] [type/CARE_TYPE] [notes/NOTES] [status/STATUS]`<br>e.g. `edit-session 1 1 d/2024-12-25 time/14:30 type/medication notes/Adjust dose status/completed` |
+| **Delete Caring Session** | `delete-session PATIENT_INDEX SESSION_INDEX`<br>e.g. `delete-session 1 2`                                                                                                                                            |
+| **Sessions Today**        | `sessions-today`                                                                                                                                                                                                     |
+| **Sessions Week**         | `sessions-week`                                                                                                                                                                                                      |
+| **Help**                  | `help`                                                                                                                                                                                                               |
+| **Exit**                  | `exit`                                                                                                                                                                                                               |
