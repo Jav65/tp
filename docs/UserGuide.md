@@ -362,7 +362,7 @@ Adds a Next-of-Kin contact for a patient.
 **Output:**
 
 * Success → `Added NextOfKin: Oad to Patient: Dylan`
-* Duplicate → `NOK with same name and phone already exists for this patient`
+* Duplicate → `This next of kin already exists for this patient`
 
 **Note**: Relationship must be one of: Daughter, Father, Mother, Grandmother, Grandfather, Granddaughter, GrandSon, Son (case-insensitive)
 
@@ -436,7 +436,7 @@ Edit an existing care session for a patient. You may also update the session sta
 
 **Output:**
 
-* Success -> `Session updated: Dylan - medication - 2024-12-25 14:30 (complete)`
+* Success -> `Edited CaringSession: medication on 2024-12-25 at 14:30 of Patient: Dylan`
 * Failure -> parameter-specific error (e.g. invalid date/time or indices)
 
 ⚠️ **Tip**: To get a better view of the caring session for a specific patient before editing, use `view-patient`
@@ -469,7 +469,7 @@ Displays all caring sessions scheduled for today.
 
 **Output:**
 
-* Success → `Today's caring sessions: 1 patients.` + list
+* Success → `Today's caring sessions: X patients.` + list
 * None → `Today's caring sessions: 0 patients.`
 
 ### View this week’s sessions: `sessions-week`
