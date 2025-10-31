@@ -26,7 +26,7 @@ public class SessionsWeekCommand extends Command {
             + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_WEEK_SESSIONS =
-            "This week's caring sessions: %1$d patients.\n";
+            "This week's caring sessions: %1$d patients.\nType 'list-patients' to undo";
 
     public SessionsWeekCommand() {}
 

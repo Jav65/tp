@@ -461,7 +461,7 @@ Schedules a care session for a patient.
 
 ### Editing a session: `edit-session`
 
-Edit an existing care session for a patient. You may also update the session status (`complete` or `incomplete`).
+Edit an existing care session for a patient. You may also update the session status (`completed` or `incomplete`).
 
 **Format:**
 `edit-session PATIENT_INDEX SESSION_INDEX [d/DATE] [time/TIME] [type/CARE_TYPE] [notes/NOTES] [status/STATUS]`
@@ -510,7 +510,7 @@ Displays all caring sessions scheduled for today.
 **Output:**
 
 * Success → `Today's caring sessions: X patients.` + list
-* None → `Today's caring sessions: 0 patients.`
+* None → `Today's caring sessions: 0 patients. Type 'list-patients' to undo`
 
 ### Viewing this week’s sessions: `sessions-week`
 
@@ -522,7 +522,7 @@ Displays all caring sessions scheduled for the current week (Monday to Sunday).
 **Output:**
 
 * Success → `This week's caring sessions: X patients.` + list
-* None → `This week's caring sessions: 0 patients.`
+* None → `This week's caring sessions: 0 patients. Type 'list-patients' to undo`
 
 ---
 
