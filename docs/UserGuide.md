@@ -107,6 +107,8 @@ If <code>java -version</code> fails, restart your terminal or computer, then try
 
    ![Step 4 Example](images/eg.png)
 
+<div style="page-break-after: always;"></div>
+
 ### 5-minute tutorial
 
 Follow this quick walkthrough to learn the core workflow. Copy each command into NOKnock’s command box and press Enter.
@@ -182,6 +184,8 @@ If you want the session to appear here, schedule one with today’s date.
 <box type="tip" seamless>
 Made a typo? Use <code>edit-patient</code>, <code>edit-nok</code>, or <code>edit-session</code> to update fields; or the <code>delete-*</code> commands to remove entries. See Features below for full command formats and options.
 </box>
+
+<div style="page-break-after: always;"></div>
 
 <box type="info" seamless>
 
@@ -292,7 +296,9 @@ Creates a new patient record.
 </box>
 
 The image below illustrates the prompt that appears when an invalid command is entered. Since tags are optional, this message will not appear if the t/ prefix is omitted.
+
 ![help message](images/TipCommandHint.png)
+
 **Output:**
 
 * Success → `New patient added: Dylan`
@@ -300,7 +306,6 @@ The image below illustrates the prompt that appears when an invalid command is e
 * Invalid input → parameter-specific error message
 
 **Note:** A patient is considered a **duplicate** when the **IC** matches exactly.
-
 
 ### Editing a patient: `edit-patient`
 
@@ -431,6 +436,8 @@ Search for patients based on their NOK’s name.
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 ## Next-of-Kin (NOK) Management
 
 ### Adding a NOK: `add-nok`
@@ -539,6 +546,8 @@ Additionally, caring session **can be scheduled in the past.** This is to allow 
 
 </box>
 
+<div style="page-break-after: always;"></div>
+
 ### Editing a session: `edit-session`
 
 Edit an existing care session for a patient. You may also update the session status (`completed` or `incomplete`).
@@ -584,6 +593,8 @@ Deletes a care session from a patient.
 
 * Success → `Deleted caring session for medication on 2025-10-31 at 14:30: Dylan`
 * Failure → `The patient/caring session index provided is invalid`
+
+<div style="page-break-after: always;"></div>
 
 ### Viewing today’s sessions: `sessions-today`
 
