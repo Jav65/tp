@@ -65,8 +65,6 @@
         "next-of-kin-nok-management": "Next-of-Kin (NOK) management",
         "caring-session-management": "Caring session management",
         "finding-searching": "Finding / searching",
-        "saving-and-data-integrity": "Saving and data integrity",
-        "corrupted-missing-data-file": "Corrupted/missing data file",
         "example-test-session-regression-checklist": "Example test session (regression checklist)",
         "notes": "Notes"
       },
@@ -140,6 +138,7 @@
         "deleting-a-session-delete-session": "Deleting a session: delete-session",
         "viewing-today-s-sessions-sessions-today": "Viewing today’s sessions: sessions-today",
         "viewing-this-week-s-sessions-sessions-week": "Viewing this week's sessions: sessions-week",
+        "clearing-database": "Clearing Database",
         "data-management": "Data Management",
         "saving-the-data": "Saving the data",
         "editing-the-data-file": "Editing the data file",
